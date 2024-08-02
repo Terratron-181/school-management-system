@@ -33,15 +33,18 @@ const userSchema = new Schema({
         required: [true, "An Email is required."]
     },
 
-    phone_number: {
-        type: String,
-        required: false
-    },
-
     role: {
         type: String,
         required: [true, "A role is required."],
-        enum: ["principal", "vice_principal", "admin", "teacher",  "parent", "student"],
+        enum: [
+            "principal", 
+            "vice_principal", 
+            "admin", 
+            "teacher", 
+            "assistant_teacher", 
+            "parent", 
+            "student"
+        ],
     }
 });
 
