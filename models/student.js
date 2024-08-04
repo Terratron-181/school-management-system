@@ -3,21 +3,15 @@ const BaseUserSchema = require("./user.js").schema;
 
 const { Schema } = mongoose;
 
+console.log(userSchema.obj);
 
-const teacherSchema = new Schema({
+const studentSchema = new Schema({
     ...BaseUserSchema.obj,
 
     role: {
         type: String,
-        enum: ["teacher"]
+        enum: ["student"]
     },
-
-    date_of_employment:{
-        type: Date,
-        default: Date.now,
-    },
-    
-    subjects: [String],
 
     phone_number1: {
         type: String,
@@ -32,9 +26,19 @@ const teacherSchema = new Schema({
         required: false
     },
 
+    date_of_birth: Date,
+
+    date_of_enrollment: Date,
+
+    Academic_year: {
+        type: Number,
+        required: true,
+    },
+
+    is_on_holiday: Boolean,
+
 });
 
+const Student = mongoose.model("student", studentSchema);
 
-const Teacher = mongoose.model("teacher", teacherSchema);
-
-module.exports = Teacher;
+module.exports = Student;
