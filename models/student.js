@@ -3,7 +3,6 @@ const BaseUserSchema = require("./user.js").schema;
 
 const { Schema } = mongoose;
 
-console.log(userSchema.obj);
 
 const studentSchema = new Schema({
     ...BaseUserSchema.obj,
@@ -13,12 +12,26 @@ const studentSchema = new Schema({
         enum: ["student"]
     },
 
+    date_of_birth: {
+        type: Date,
+        required: [true, "Date of birth is required."]
+    },
+
+    date_of_enrollment: {
+        type: Date,
+        required: [true, "Date of enrollment is required."]
+    },
+
+
+    guardians: {
+        type: [mongoose.Schema.Types.ObjectId],
+        ref: "gaurdian",
+        required: false
+    },
+
     phone_number1: {
         type: String,
-        required: [
-            true, 
-            "One phone number is required."
-        ]
+        required: false,
     },
 
     phone_number2: {
@@ -26,9 +39,6 @@ const studentSchema = new Schema({
         required: false
     },
 
-    date_of_birth: Date,
-
-    date_of_enrollment: Date,
 
     Academic_year: {
         type: Number,
@@ -36,6 +46,11 @@ const studentSchema = new Schema({
     },
 
     is_on_holiday: Boolean,
+
+    has_demerits: {
+        type: Boolean,
+        default: false
+    },
 
 });
 

@@ -37,12 +37,13 @@ const baseUserSchema = new Schema({
         type: String,
         required: [true, "A role is required."],
         enum: [
+            "guest",
             "principal", 
             "vice_principal", 
             "admin", 
             "teacher", 
             "assistant_teacher", 
-            "parent", 
+            "gaurdian", 
             "student"
         ],
     }
