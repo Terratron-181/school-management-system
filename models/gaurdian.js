@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const BaseUserSchema = require("./user.js").schema;
 
+const { getFullName, getInitialName } = require("./sharedmethods.js");
+
 const { Schema } = mongoose;
 
 
@@ -34,6 +36,10 @@ const gaurdianSchema = new Schema({
         required: false
     },
 });
+
+gaurdianSchema.methods.getFullName = getFullName;
+
+gaurdianSchema.methods.getInitialName = getInitialName;
 
 
 const Gaurdian = mongoose.model("gaurdian", gaurdianSchema);

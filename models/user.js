@@ -8,7 +8,7 @@ const baseUserSchema = new Schema({
         required: [true, "A name is required."]
     },
 
-    Second_name: {
+    second_name: {
         type: String,
         required: [true, "A name is required."]
     },
