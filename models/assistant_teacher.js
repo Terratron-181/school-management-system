@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const teacherSchema = require("./teacher.js").schema;
 
+const { getFullName, getInitialName, setName } = require("./sharedmethods.js");
+
 const { Schema } = mongoose;
 
 const assistantTeacherSchema = new Schema({
@@ -12,9 +14,15 @@ const assistantTeacherSchema = new Schema({
     },
 });
 
-const assistantTeacher = mongoose.model(
+assistantTeacherSchema.methods.getFullName = getFullName;
+
+assistantTeacherSchema.methods.getInitialName = getInitialName;
+
+assistantTeacherSchema.methods.setName = setName;
+
+const AssistantTeacher = mongoose.model(
     "assistant_teacher", 
     assistantTeacherSchema
 );
 
-module.exports = assistantTeacher;
+module.exports = AssistantTeacher;

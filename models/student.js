@@ -1,12 +1,12 @@
 const mongoose = require("mongoose");
 const BaseUserSchema = require("./user.js").schema;
 
-const Gaurdian = require("./gaurdian.js");
+const Guardian = require("./guardian.js");
 const Demerit = require("./demerit.js");
 
-const { getFullName, getInitialName } = require("./sharedmethods.js");
+const { getFullName, getInitialName, setName } = require("./sharedmethods.js");
 
-const { Schema } = mongoose;
+const { Schema } = mongoose; 
 
 
 const studentSchema = new Schema({
@@ -30,7 +30,7 @@ const studentSchema = new Schema({
 
     guardians: {
         type: [mongoose.Schema.Types.ObjectId],
-        ref: "gaurdian",
+        ref: "guardian",
         required: false
     },
 
@@ -63,22 +63,36 @@ studentSchema.methods.getFullName = getFullName;
 
 studentSchema.methods.getInitialName = getInitialName;
 
-studentSchema.methods.listGaurdians = function() {
+studentSchema.methods.setName = setName;
+
+studentSchema.methods.updatehas_demerits = async function(new_value) {
+    try {
+        this.has_demerits = new_value;
+        await this.save();        
+    } catch (error) {
+        console.log(`Failed: updating has_demerits of student(${this._id})\n -error.msg: ${error.message}`);        
+    }
+}
+
+studentSchema.methods.listGuardians = function() {
     if (this.guardians.legnth > 0) {
-        let gaurdians_object = {};
+        let guardians_object = {};
         for (id in this.guardians) {
-            const gaurdian = Gaurdian.findById(id);
-            gaurdians_list[gaurdian._id] = gaurdian.getFullName;
+            const guardian = Guardian.findById(id);
+            guardians_object[guardian._id] = guardian.getFullName();
         }
-        return gaurdians_object;
+        return guardians_object;
     } else {
-        throw new Error(`Empty: Student(${this._id}) has no gaurdians assigned.`);  
+        throw new Error(`Empty: Student(${this._id}) has no gaurdians assigned.`);
     }
 };
 
 
 studentSchema.methods.issueDemerit = async function(issued_by, description) {
     try {
+        if (!this.has_demerits){
+            this.updatehas_demerits(true);
+        }
         const demerit = new Demerit({
             student_id: this._id,
             issued_by: issued_by,
@@ -87,7 +101,7 @@ studentSchema.methods.issueDemerit = async function(issued_by, description) {
         await demerit.save();
         console.log(`Successful: issued student(${this._id}) demerit(${demerit._id}).`);
     } catch (error) {
-        console.log(`Faild: issueDemerit(${issued_by}, ${description}): ${error.message}`);       
+        console.log(`Faild: issueDemerit(issued_by:${issued_by}, description:${description})\n -error.msg: ${error.message}`);
     }
 };
 

@@ -43,7 +43,7 @@ const baseUserSchema = new Schema({
             "admin", 
             "teacher", 
             "assistant_teacher", 
-            "gaurdian", 
+            "guardian", 
             "student"
         ],
     }

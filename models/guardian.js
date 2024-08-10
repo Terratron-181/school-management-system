@@ -1,20 +1,20 @@
 const mongoose = require("mongoose");
 const BaseUserSchema = require("./user.js").schema;
 
-const { getFullName, getInitialName } = require("./sharedmethods.js");
+const { getFullName, getInitialName, setName } = require("./sharedmethods.js");
 
 const { Schema } = mongoose;
 
 
-const gaurdianSchema = new Schema({
+const guardianSchema = new Schema({
     ...BaseUserSchema.obj,
 
     role: {
         type: String,
-        enum: ["gaurdian"]
+        enum: ["guardian"]
     },
 
-    gaurdian_of: {
+    guardian_of: {
         type: [mongoose.Schema.Types.ObjectId],
         ref: "student",
         required: [
@@ -37,11 +37,14 @@ const gaurdianSchema = new Schema({
     },
 });
 
-gaurdianSchema.methods.getFullName = getFullName;
+guardianSchema.methods.getFullName = getFullName;
 
-gaurdianSchema.methods.getInitialName = getInitialName;
+guardianSchema.methods.getInitialName = getInitialName;
+
+guardianSchema.methods.setName = setName;
 
 
-const Gaurdian = mongoose.model("gaurdian", gaurdianSchema);
 
-module.exports = Gaurdian;
+const Guardian = mongoose.model("guardian", guardianSchema);
+
+module.exports = Guardian;

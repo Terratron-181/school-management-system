@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const BaseUserSchema = require("./user.js").schema;
 
+const { getFullName, getInitialName, setName } = require("./sharedmethods.js");
+
 const { Schema } = mongoose;
 
 
@@ -33,6 +35,12 @@ const teacherSchema = new Schema({
     },
 
 });
+
+teacherSchema.methods.getFullName = getFullName;
+
+teacherSchema.methods.getInitialName = getInitialName;
+
+teacherSchema.methods.setName = setName;
 
 
 const Teacher = mongoose.model("teacher", teacherSchema);
