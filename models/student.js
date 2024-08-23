@@ -57,6 +57,11 @@ const studentSchema = new Schema({
         default: false
     },
 
+    number_of_demerits: {
+        type: Number,
+        default: 0
+    }
+
 });
 
 studentSchema.methods.getFullName = getFullName;
@@ -67,6 +72,9 @@ studentSchema.methods.setName = setName;
 
 studentSchema.methods.updatehas_demerits = async function(new_value) {
     try {
+        if (!new_value) {
+            this.number_of_demerits = 0;
+        };
         this.has_demerits = new_value;
         await this.save();        
     } catch (error) {
