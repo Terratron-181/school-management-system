@@ -6,7 +6,7 @@ const Demerit = require("./demerit.js");
 
 const { getFullName, getInitialName, setName } = require("./sharedmethods.js");
 
-const { Schema } = mongoose; 
+const { Schema } = mongoose;
 
 
 const studentSchema = new Schema({
@@ -47,10 +47,13 @@ const studentSchema = new Schema({
 
     Academic_year: {
         type: Number,
-        required: true,
+        required: [true, "Academic year is required."]
     },
 
-    is_on_holiday: Boolean,
+    is_on_holiday: {
+        type: Boolean,
+        default: true
+    },
 
     has_demerits: {
         type: Boolean,
