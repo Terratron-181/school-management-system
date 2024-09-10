@@ -17,10 +17,6 @@ const guardianSchema = new Schema({
     guardian_of: {
         type: [mongoose.Schema.Types.ObjectId],
         ref: "student",
-        required: [
-            true,
-            "The student(s) must be registered first"
-        ]
     },
 
     phone_number1: {

@@ -24,7 +24,7 @@ const studentSchema = new Schema({
 
     date_of_enrollment: {
         type: Date,
-        required: [true, "Date of enrollment is required."]
+        default: Date.now
     },
 
 
@@ -45,7 +45,7 @@ const studentSchema = new Schema({
     },
 
 
-    Academic_year: {
+    academic_year: {
         type: Number,
         required: [true, "Academic year is required."]
     },
